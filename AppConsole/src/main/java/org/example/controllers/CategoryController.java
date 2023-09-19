@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/categories")
@@ -15,8 +17,8 @@ public class CategoryController {
 
     private final CategoryRepository categoryRepository;
     @GetMapping()
-    public ResponseEntity<String> index() {
-        return new ResponseEntity<>("Привіт", HttpStatus.OK);
+    public ResponseEntity<List<CategoryEntity>> index() {
+        return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping()
