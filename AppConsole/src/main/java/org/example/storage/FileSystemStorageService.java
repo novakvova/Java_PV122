@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private int [] imageSize = {32, 150, 300, 600, 1200};
 
     private FileSystemStorageService(StorageProperties storageProperties) {
         rootLocation = Paths.get(storageProperties.getFolder());
@@ -35,17 +37,19 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void removeFile(String removeFile) {
-//        try {
-//
-//        } catch(MalformedURLException e) {
-//            throw new StorageException("Файл не знаєте: "+ ашду)
-//        }
-
+        for (var size : imageSize) {
+            Path filePath = load(size+"_"+removeFile);
+            File file = new File(filePath.toString());
+            if (file.delete())
+                System.out.println("--Файл успішно видалено--" + file);
+            else
+                System.out.println("++Файл не знайдено++" + file);
+        }
     }
 
     @Override
     public Path load(String fileName) {
-        return null;
+        return rootLocation.resolve(fileName);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class FileSystemStorageService implements StorageService {
         try {
             String extension = "webp";
             String randomFilename = UUID.randomUUID().toString() + "." + extension;
-            int [] imageSize = {32, 150, 300, 600, 1200};
+
             BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
             for(int size : imageSize) {
                 String fileOutputSize = rootLocation.toString()+"/"+size+"_"+randomFilename;
