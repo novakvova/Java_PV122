@@ -13,6 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,15 +37,33 @@ public class CategoryController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CategoryItemDTO create(@ModelAttribute CategoryCreateDTO dto)
     {
-        String fileName = storageService.saveImage(dto.getImage());
-        var cat = CategoryEntity
-                .builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .image(fileName)
-                .build();
-        categoryRepository.save(cat);
-        return categoryMapper.categoryToItemDTO(cat);
+        Date currentDate = new Date(); // Get the current date and time
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss"); // Define the desired date format
+        String formattedDate = dateFormat.format(currentDate);
+        String dateString = formattedDate; // Your date string in yyyy-MM-dd format
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateString);
+            System.out.println("Parsed Date: " + date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(date!=null) {
+            String fileName = storageService.saveImage(dto.getImage());
+            var instant = date.toInstant();
+            var zoneId = ZoneId.systemDefault(); // Use the system default time zone or specify your desired time zone
+            var localDateTime = instant.atZone(zoneId).toLocalDateTime();
+            var cat = CategoryEntity
+                    .builder()
+                    .name(dto.getName())
+                    .description(dto.getDescription())
+                    .image(fileName)
+                    .dateCreate(localDateTime)
+                    .build();
+            categoryRepository.save(cat);
+            return categoryMapper.categoryToItemDTO(cat);
+        }
+        return null;
     }
 
     @GetMapping("{id}")
