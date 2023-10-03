@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 
+
 const SignIn = () => {
+  //const LogoDark = "http://localhost:8085/uploading/150_a81ea56d-3c68-486d-8b42-5b40697ab11b.webp";
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -185,7 +187,7 @@ const SignIn = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                  <label className="mb-2.5 block font-medium text-red-700 dark:text-white">
                     Пароль
                   </label>
                   <div className="relative">
