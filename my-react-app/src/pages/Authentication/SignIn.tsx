@@ -194,7 +194,7 @@ const SignIn = () => {
                     <input
                       type="password"
                       placeholder="6+ Символів, 1 Велика літера"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="w-full border-red-500 text-red-900 placeholder-red-700 rounded-lg border bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
 
                     <span className="absolute right-4 top-4">
@@ -219,6 +219,8 @@ const SignIn = () => {
                       </svg>
                     </span>
                   </div>
+                  <p className="mt-2 text-sm text-red-600 dark:text-red-500"><span className="font-medium">Oh, snapp!</span> Some error message.</p>
+
                 </div>
 
                 <div className="mb-5">
