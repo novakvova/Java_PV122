@@ -5,6 +5,6 @@ const initState: IAuthUser = {
     user: undefined
 };
 
-export const AuthReducer = (state = initState, action: any): IAuthUser => {
+export const AuthReducer = (state = initState): IAuthUser => {
     return state;
 }
