@@ -36,8 +36,9 @@ function App() {
               <Route path="/auth/signup" element={<SignUp />} />
               <Route element={<DefaultLayout />}>
                   {/*<Route index element={<ECommerce />} />*/}
-                  {routes.map(({ path, component: Component }) => (
+                  {routes.map(({ path, component: Component }, idx) => (
                       <Route
+                          key={idx}
                           path={path}
                           element={
                               <Suspense fallback={<Loader />}>
