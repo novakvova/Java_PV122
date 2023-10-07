@@ -6,3 +6,7 @@ export interface ILogin {
 export interface ITokenResponse {
     token: string;
 }
+
+export interface IGoogleAuth {
+    access_token: string
+}

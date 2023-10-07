@@ -1,10 +1,26 @@
 import {useGoogleLogin} from "@react-oauth/google";
+import http_common from "../../../http_common.ts";
 
 const GoogleAuth = () => {
 
     const onGoogleRequest = useGoogleLogin({
         onSuccess: tokenResponse => {
+            const {access_token} = tokenResponse;
             console.log("Auth token info", tokenResponse);
+            http_common
+                .get(
+                    `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${tokenResponse.access_token}`,
+                            Accept: "application/json",
+                        },
+                    }
+                )
+                .then((res) => {
+                    console.log("Google user info", res);
+                });
+
         },
     });
     return (
