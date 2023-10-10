@@ -1,31 +1,46 @@
 import {useGoogleLogin} from "@react-oauth/google";
 import http_common from "../../../http_common.ts";
+import {IGoogleAuth, ITokenResponse} from "../SignIn/types.ts";
 
 const GoogleAuth = () => {
 
     const onGoogleRequest = useGoogleLogin({
-        onSuccess: tokenResponse => {
+        onSuccess: async tokenResponse => {
             const {access_token} = tokenResponse;
+            const googleAuth: IGoogleAuth = {
+                access_token
+            };
             console.log("Auth token info", tokenResponse);
-            http_common
-                .get(
-                    `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${tokenResponse.access_token}`,
-                            Accept: "application/json",
-                        },
-                    }
-                )
-                .then((res) => {
-                    console.log("Google user info", res);
-                });
+            try {
+                const result = await http_common
+                    .post<ITokenResponse>("/api/account/google", googleAuth);
+                console.log("Token my auth", result.data);
+            } catch(e) {
+                console.log("Server is bad", e);
+            }
+
+            // http_common
+            //     .get(
+            //         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`,
+            //         {
+            //             headers: {
+            //                 Authorization: `Bearer ${tokenResponse.access_token}`,
+            //                 Accept: "application/json",
+            //             },
+            //         }
+            //     )
+            //     .then((res) => {
+            //         console.log("Google user info", res);
+            //     });
 
         },
     });
     return (
        <>
-            <button onClick={()=>onGoogleRequest()} className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+            <button onClick={(e)=>{
+                e.preventDefault();
+                onGoogleRequest();
+            }} className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                         width="20"

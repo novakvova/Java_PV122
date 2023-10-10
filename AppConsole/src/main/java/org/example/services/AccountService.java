@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.configuration.security.JwtService;
 import org.example.dto.account.AuthResponseDto;
 import org.example.dto.account.LoginDto;
+import org.example.entities.UserEntity;
 import org.example.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +18,23 @@ public class AccountService {
     private final JwtService jwtService;
 
     public AuthResponseDto login(LoginDto dto) {
-        var user = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow();
+        var userAuth = userRepository.findByEmail(dto.getEmail());
+        if(!userAuth.isPresent())
+            throw new UsernameNotFoundException("Користувача не знайдено");
+        var user = userAuth.get();
+        if(user.isGoogleAuth())
+            throw new AccountException("Ваш акаунт війшов через гугл");
         var isValid = passwordEncoder.matches(dto.getPassword(), user.getPassword());
         if(!isValid)
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Користувача не знайдено");
+
+        var jwtToken = jwtService.generateAccessToken(user);
+        return AuthResponseDto.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    public AuthResponseDto getUserToken(UserEntity user) {
 
         var jwtToken = jwtService.generateAccessToken(user);
         return AuthResponseDto.builder()
