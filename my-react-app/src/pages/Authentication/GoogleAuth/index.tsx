@@ -1,8 +1,11 @@
 import {useGoogleLogin} from "@react-oauth/google";
 import http_common from "../../../http_common.ts";
 import {IGoogleAuth, ITokenResponse} from "../SignIn/types.ts";
+import {LoginUserAction} from "../../../store/actions/AuthActions.ts";
+import {useDispatch} from "react-redux";
 
 const GoogleAuth = () => {
+    const dispatch = useDispatch();
 
     const onGoogleRequest = useGoogleLogin({
         onSuccess: async tokenResponse => {
@@ -14,7 +17,10 @@ const GoogleAuth = () => {
             try {
                 const result = await http_common
                     .post<ITokenResponse>("/api/account/google", googleAuth);
-                console.log("Token my auth", result.data);
+                const {token} = result.data;
+                LoginUserAction(dispatch,token);
+
+                //console.log("Token my auth", result.data);
             } catch(e) {
                 console.log("Server is bad", e);
             }

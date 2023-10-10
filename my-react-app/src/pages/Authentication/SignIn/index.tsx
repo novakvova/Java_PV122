@@ -8,9 +8,13 @@ import {useFormik} from "formik";
 import http_common from "../../../http_common.ts";
 import GoogleAuth from "../GoogleAuth";
 import {GoogleOAuthProvider} from "@react-oauth/google";
+import {LoginUserAction} from "../../../store/actions/AuthActions.ts";
+import {useDispatch} from "react-redux";
 
 
 const SignIn = () => {
+
+  const dispatch = useDispatch();
 
   const initValue: ILogin = {
     email: "",
@@ -25,6 +29,8 @@ const SignIn = () => {
   const onHandlerSubmit = async (values: ILogin) => {
     try {
       const result = await http_common.post<ITokenResponse>("/api/account/login", values);
+      const {token} = result.data;
+      LoginUserAction(dispatch,token);
       console.log("Result server login", result.data);
     }catch(ex) {
       console.log("Error", ex);

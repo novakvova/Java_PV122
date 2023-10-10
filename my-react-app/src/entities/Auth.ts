@@ -30,3 +30,16 @@ export interface ILoginResult {
     token: string;
 }
 
+export interface LoginSuccessAction {
+    type: AuthUserActionType.LOGIN_USER,
+    payload: IUser
+}
+
+export interface LogoutSuccessUser {
+    type: AuthUserActionType.LOGOUT_USER
+}
+
+export type AuthUserActions = LoginSuccessAction | LogoutSuccessUser;
+
+
+
