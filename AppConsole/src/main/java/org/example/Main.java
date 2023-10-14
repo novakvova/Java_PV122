@@ -32,6 +32,7 @@ public class Main {
                 seedService.seedUserData();
                 seedService.seedCategory();
                 seedService.seedProduct();
+                seedService.seedProductImage();
             }catch(Exception ex) {
                 System.out.println("--------Хюстон у нас проблеми--------"+ex.getMessage());
             }

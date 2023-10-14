@@ -19,6 +19,7 @@ public class SeedService {
     private final PasswordEncoder passwordEncoder;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
 
     public void seedRoleData() {
         if(roleRepository.count()==0) {
@@ -114,6 +115,34 @@ public class SeedService {
                     .category(clothes)
                     .build();
             productRepository.save(girl);
+        }
+    }
+
+    public void seedProductImage() {
+        if(productImageRepository.count()==0) {
+            var hpProbook = ProductEntity
+                    .builder()
+                    .id(1)
+                    .build();
+            var image1= ProductImageEntity
+                    .builder()
+                    .image("probook1.webp")
+                    .product(hpProbook)
+                    .build();
+            productImageRepository.save(image1);
+
+            var image2= ProductImageEntity
+                    .builder()
+                    .image("probook2.webp")
+                    .product(hpProbook)
+                    .build();
+            productImageRepository.save(image2);
+            var image3= ProductImageEntity
+                    .builder()
+                    .image("probook3.webp")
+                    .product(hpProbook)
+                    .build();
+            productImageRepository.save(image3);
         }
     }
 }

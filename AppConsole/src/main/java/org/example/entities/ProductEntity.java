@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "tbl_products")
@@ -25,4 +27,7 @@ public class ProductEntity {
     private CategoryEntity category;
     @Transient
     private int categoryId;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImageEntity> images;
+
 }
