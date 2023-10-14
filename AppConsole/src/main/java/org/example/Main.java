@@ -30,6 +30,7 @@ public class Main {
                 storageService.init();
                 seedService.seedRoleData();
                 seedService.seedUserData();
+                seedService.seedCategory();
             }catch(Exception ex) {
                 System.out.println("--------Хюстон у нас проблеми--------"+ex.getMessage());
             }
