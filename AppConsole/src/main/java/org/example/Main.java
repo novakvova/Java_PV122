@@ -33,6 +33,7 @@ public class Main {
                 seedService.seedCategory();
                 seedService.seedProduct();
                 seedService.seedProductImage();
+                seedService.seedOrderStatusData();
             }catch(Exception ex) {
                 System.out.println("--------Хюстон у нас проблеми--------"+ex.getMessage());
             }

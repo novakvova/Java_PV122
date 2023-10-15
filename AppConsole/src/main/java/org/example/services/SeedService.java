@@ -20,6 +20,7 @@ public class SeedService {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
+    private final OrderStatusRepository orderStatusRepository;
 
     public void seedRoleData() {
         if(roleRepository.count()==0) {
@@ -143,6 +144,23 @@ public class SeedService {
                     .product(hpProbook)
                     .build();
             productImageRepository.save(image3);
+        }
+    }
+
+    public void seedOrderStatusData() {
+        if(orderStatusRepository.count()==0) {
+            String []list= new String[] {"Нове замовлення", "Обробляється",
+                    "Прямує до міста отримувача", "Знаходиться в місті отримувача",
+                    "Скасовано" };
+            for (var item : list) {
+                var status = OrderStatusEntity
+                        .builder()
+                        .name(item)
+                        .build();
+                orderStatusRepository.save(status);
+            }
+
+
         }
     }
 }
