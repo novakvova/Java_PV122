@@ -9,6 +9,6 @@ import java.util.List;
 public class ProductCreateDTO {
     private String name;
     private String description;
-    private List<MultipartFile> image;
+    private List<MultipartFile> images;
     private int categoryId;
 }
