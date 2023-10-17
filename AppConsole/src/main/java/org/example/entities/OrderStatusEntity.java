@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,4 +20,7 @@ public class OrderStatusEntity {
     private int id;
     @Column(length = 255, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "orderStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderEntity> orders;
 }
