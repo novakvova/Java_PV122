@@ -34,6 +34,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
                         .requestMatchers("/api/categories/**").hasAuthority(Roles.Admin)
+                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+                        .requestMatchers("/api/products/**").hasAuthority(Roles.Admin)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(it->it.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
