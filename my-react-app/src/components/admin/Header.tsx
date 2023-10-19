@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import Logo from '../images/logo/logo-icon.svg';
-import DarkModeSwitcher from './DarkModeSwitcher';
-import DropdownMessage from './DropdownMessage';
-import DropdownNotification from './DropdownNotification';
-import DropdownUser from './DropdownUser';
+import Logo from '../../images/logo/logo-icon.svg';
+import DarkModeSwitcher from './DarkModeSwitcher.tsx';
+import DropdownMessage from './DropdownMessage.tsx';
+import DropdownNotification from './DropdownNotification.tsx';
+import DropdownUser from './DropdownUser.tsx';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;

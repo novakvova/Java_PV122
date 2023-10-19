@@ -1,13 +1,13 @@
-import Breadcrumb from '../../components/Breadcrumb';
-import CheckboxFive from '../../components/CheckboxFive';
-import CheckboxFour from '../../components/CheckboxFour';
-import CheckboxOne from '../../components/CheckboxOne';
-import CheckboxThree from '../../components/CheckboxThree';
-import CheckboxTwo from '../../components/CheckboxTwo';
-import SwitcherFour from '../../components/SwitcherFour';
-import SwitcherOne from '../../components/SwitcherOne';
-import SwitcherThree from '../../components/SwitcherThree';
-import SwitcherTwo from '../../components/SwitcherTwo';
+import Breadcrumb from '../../components/admin/Breadcrumb.tsx';
+import CheckboxFive from '../../components/admin/CheckboxFive.tsx';
+import CheckboxFour from '../../components/admin/CheckboxFour.tsx';
+import CheckboxOne from '../../components/admin/CheckboxOne.tsx';
+import CheckboxThree from '../../components/admin/CheckboxThree.tsx';
+import CheckboxTwo from '../../components/admin/CheckboxTwo.tsx';
+import SwitcherFour from '../../components/admin/SwitcherFour.tsx';
+import SwitcherOne from '../../components/admin/SwitcherOne.tsx';
+import SwitcherThree from '../../components/admin/SwitcherThree.tsx';
+import SwitcherTwo from '../../components/admin/SwitcherTwo.tsx';
 
 const FormElements = () => {
   return (

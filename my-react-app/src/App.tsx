@@ -8,8 +8,10 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 import routes from './routes';
+import HomePage from "./components/HomePage";
+import ECommerce from "./pages/Dashboard/ECommerce.tsx";
 
-const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
+const DefaultLayout = lazy(() => import('./layout/AdminLayout.tsx'));
 
 
 function App() {
@@ -29,13 +31,19 @@ function App() {
           <Routes>
               <Route path="/" element={
                   <Suspense fallback={<Loader/>}>
-                      <SignIn/>
+                      <HomePage/>
                   </Suspense>
               }/>
+
+              <Route path="/login" element={
+                  <Suspense fallback={<Loader/>}>
+                      <SignIn/>
+                  </Suspense>
+              } />
               <Route path="/auth/signin" element={<SignIn />} />
               <Route path="/auth/signup" element={<SignUp />} />
-              <Route element={<DefaultLayout />}>
-                  {/*<Route index element={<ECommerce />} />*/}
+              <Route path={"/admin"}  element={<DefaultLayout />}>
+                  <Route index element={<ECommerce />} />
                   {routes.map(({ path, component: Component }, idx) => (
                       <Route
                           key={idx}

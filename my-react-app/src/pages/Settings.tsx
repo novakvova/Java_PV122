@@ -1,4 +1,4 @@
-import Breadcrumb from '../components/Breadcrumb';
+import Breadcrumb from '../components/admin/Breadcrumb.tsx';
 import userThree from '../images/user/user-03.png';
 // import fireToast from '../hooks/fireToast';
 // import { Table } from "../components/TableSettings";

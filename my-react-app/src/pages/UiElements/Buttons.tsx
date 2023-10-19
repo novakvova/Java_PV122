@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import Breadcrumb from '../../components/Breadcrumb';
+import Breadcrumb from '../../components/admin/Breadcrumb.tsx';
 
 const Buttons = () => {
   return (

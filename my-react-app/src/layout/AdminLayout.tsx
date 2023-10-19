@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
+import Header from '../components/admin/Header.tsx';
+import Sidebar from '../components/admin/Sidebar.tsx';
 import { Outlet } from 'react-router-dom';
 
-const DefaultLayout = () => {
+const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -35,4 +35,4 @@ const DefaultLayout = () => {
   );
 };
 
-export default DefaultLayout;
+export default AdminLayout;

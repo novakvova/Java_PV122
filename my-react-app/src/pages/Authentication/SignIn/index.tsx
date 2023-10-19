@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import LogoDark from '../../../images/logo/logo-dark.svg';
 import Logo from '../../../images/logo/logo.svg';
 import InputGroup from "../../../common/InputGroup";
@@ -14,6 +14,7 @@ import {useDispatch} from "react-redux";
 
 const SignIn = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const initValue: ILogin = {
@@ -31,6 +32,7 @@ const SignIn = () => {
       const result = await http_common.post<ITokenResponse>("/api/account/login", values);
       const {token} = result.data;
       LoginUserAction(dispatch,token);
+      navigate("/profile");
       console.log("Result server login", result.data);
     }catch(ex) {
       console.log("Error", ex);
