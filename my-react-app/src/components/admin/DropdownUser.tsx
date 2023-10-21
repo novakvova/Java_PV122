@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserOne from '../../images/user/user-01.png';
+import {useTypedSelector} from "../../store/hooks/useTypedSelector.ts";
 
 const DropdownUser = () => {
+
+  const {user} = useTypedSelector(store=>store.auth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -45,9 +48,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {user?.email}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{user?.roles[0]}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
