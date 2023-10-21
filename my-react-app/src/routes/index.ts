@@ -9,6 +9,7 @@ const Settings = lazy(() => import('../pages/Settings'));
 const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
+const CategoryCreate = lazy(() => import('../components/admin/category/create'));
 
 const coreRoutes = [
   {
@@ -31,6 +32,18 @@ const coreRoutes = [
     title: 'Form Layouts',
     component: FormLayout,
   },
+
+  {
+    path: 'categories/list',
+    title: 'Forms Elements',
+    component: FormElements,
+  },
+  {
+    path: 'categories/create',
+    title: 'Form Layouts',
+    component: CategoryCreate,
+  },
+
   {
     path: 'tables',
     title: 'Tables',
