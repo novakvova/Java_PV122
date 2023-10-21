@@ -38,6 +38,7 @@ const coreRoutes = [
     title: 'Forms Elements',
     component: FormElements,
   },
+
   {
     path: 'categories/create',
     title: 'Form Layouts',
