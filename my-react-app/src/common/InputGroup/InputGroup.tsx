@@ -42,7 +42,7 @@ const InputGroup: FC<InputGroupProps> = ({
                         onChange={onChange}
                         onBlur={onBlur}
                         placeholder={placeholder}
-                        className={classNames("w-full rounded-lg border bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:bg-form-input",
+                        className={classNames("w-full rounded-lg border bg-transparent py-3 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:bg-form-input",
                             {"border-stroke dark:border-form-strokedark ": !isError},
                             {"border-red-500 text-red-900 placeholder-red-700 dark:border-r-form-strokedark ": isError })}
                     />

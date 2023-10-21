@@ -32,7 +32,7 @@ const SignIn = () => {
       const result = await http_common.post<ITokenResponse>("/api/account/login", values);
       const {token} = result.data;
       LoginUserAction(dispatch,token);
-      navigate("/profile");
+      navigate("/admin/categories/create");
       console.log("Result server login", result.data);
     }catch(ex) {
       console.log("Error", ex);
