@@ -40,10 +40,26 @@ function App() {
                       <SignIn/>
                   </Suspense>
               } />
-              <Route path="/auth/signin" element={<SignIn />} />
-              <Route path="/auth/signup" element={<SignUp />} />
-              <Route path={"/admin"}  element={<DefaultLayout />}>
-                  <Route index element={<ECommerce />} />
+              <Route path="/auth/signin" element={
+                  <Suspense fallback={<Loader/>}>
+                    <SignIn />
+                  </Suspense>
+                  }/>
+              <Route path="/auth/signup" element={
+                  <Suspense fallback={<Loader/>}>
+                    <SignUp />
+                  </Suspense>
+              } />
+              <Route path={"/admin"}  element={
+                  <Suspense fallback={<Loader/>}>
+                    <DefaultLayout />
+                  </Suspense>
+              }>
+                  <Route index element={
+                      <Suspense fallback={<Loader/>}>
+                        <ECommerce />
+                      </Suspense>
+                  } />
                   {routes.map(({ path, component: Component }, idx) => (
                       <Route
                           key={idx}
