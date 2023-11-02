@@ -2,7 +2,7 @@ import Breadcrumb from '../../Breadcrumb.tsx';
 import {IProductCreate} from "./types.ts";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {ChangeEvent, lazy} from "react";
+import {ChangeEvent, lazy, useEffect, useState} from "react";
 
 const InputGroup = lazy(() => import( "../../../../common/InputGroup"));
 
@@ -10,20 +10,43 @@ import InputImageBox from "../../../../common/InputImageBox";
 import http_common from "../../../../http_common.ts";
 import {ITokenResponse} from "../../../../pages/Authentication/SignIn/types.ts";
 import {useNavigate} from "react-router-dom";
+import {ICategoryItem} from "../../category/list/types.ts";
+import SelectGroup from "../../../../common/SelectGroup";
 
 const ProductCreatePage = () => {
+
+    const [categories, setCategories] = useState<ICategoryItem[]>([]);
+
+    useEffect(() => {
+        http_common.get<ICategoryItem[]>("/api/categories").then(resp=> {
+            setCategories(resp.data);
+        });
+    }, []);
+
     const navigate = useNavigate();
 
     const init : IProductCreate = {
         name: "",
-        image: null,
+        categoryId: null,
+        images: [],
         description: ""
     };
 
     const validator = Yup.object().shape({
         name: Yup.string().required("Вкажіть назву"),
         description: Yup.string().required("Вкажіть опис"),
-        image: Yup.mixed().required("Фото є обов'язковим"),
+        categoryId: Yup.number()
+            .required("Категорія є обов'язковой")
+            .test("category-required", "Категорія є обов'язковой", function (value) {
+                if(value !== -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }),
+        image: Yup.array()
+            .required("Фото є обов'язковим")
+            .min(1, "Має бути мінімум 1 фотка"),
     });
 
     const onFormikSubmit = async (values: IProductCreate) => {
@@ -76,7 +99,7 @@ const ProductCreatePage = () => {
 
                                 <InputGroup
                                     field={"name"}
-                                    label={"Назва категорії"}
+                                    label={"Назва"}
                                     type={"text"}
                                     placeholder={"Вкажіть назву"}
                                     value={values.name}
@@ -87,7 +110,7 @@ const ProductCreatePage = () => {
 
                                 <InputGroup
                                     field={"description"}
-                                    label={"Опис категорії"}
+                                    label={"Опис"}
                                     type={"text"}
                                     placeholder={"Вкажіть опис"}
                                     value={values.description}
@@ -96,12 +119,16 @@ const ProductCreatePage = () => {
                                     touched={touched.description}
                                     error={errors.description} />
 
-                                <InputImageBox
-                                    image={values.image}
-                                    field={"image_file"}
-                                    touched={touched.image}
-                                    error={errors.image}
-                                    onChange={handleFileChange}
+                                <SelectGroup
+                                    label="Категорія"
+                                    field="categoryId"
+                                    handleChange={handleChange}
+                                    error={errors.categoryId}
+                                    touched={touched.categoryId}
+                                    handleBlur={handleBlur}
+                                    options={categories}
+                                    optionKey="id"
+                                    optionLabel="name"
                                 />
 
                                 <button
