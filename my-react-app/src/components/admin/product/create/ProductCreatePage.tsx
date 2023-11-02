@@ -2,16 +2,16 @@ import Breadcrumb from '../../Breadcrumb.tsx';
 import {IProductCreate} from "./types.ts";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {ChangeEvent, lazy, useEffect, useState} from "react";
+import {lazy, useEffect, useState} from "react";
 
 const InputGroup = lazy(() => import( "../../../../common/InputGroup"));
 
-import InputImageBox from "../../../../common/InputImageBox";
 import http_common from "../../../../http_common.ts";
 import {ITokenResponse} from "../../../../pages/Authentication/SignIn/types.ts";
 import {useNavigate} from "react-router-dom";
 import {ICategoryItem} from "../../category/list/types.ts";
 import SelectGroup from "../../../../common/SelectGroup";
+import ImageListGroup from "../../../../common/ImageListGroup";
 
 const ProductCreatePage = () => {
 
@@ -44,24 +44,23 @@ const ProductCreatePage = () => {
                     return false;
                 }
             }),
-        image: Yup.array()
+        images: Yup.array()
             .required("Фото є обов'язковим")
             .min(1, "Має бути мінімум 1 фотка"),
     });
 
     const onFormikSubmit = async (values: IProductCreate) => {
         try {
-            await http_common.post<ITokenResponse>("/api/categories", values,
+            await http_common.post<ITokenResponse>("/api/products", values,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }
                 });
-            navigate("../categories/list");
+            navigate("../products/list");
         } catch(ex) {
             console.log("Error", ex);
         }
-
     }
 
     const formik = useFormik({
@@ -70,20 +69,7 @@ const ProductCreatePage = () => {
         validationSchema: validator
     });
 
-
-
     const {touched, handleChange, handleBlur, errors, values, setFieldValue, handleSubmit} = formik;
-
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-
-        const file =
-            e.currentTarget.files && e.currentTarget.files[0];
-
-        if (file) {
-            setFieldValue("image", file);
-        }
-        e.target.value = "";
-    }
 
     return (
         <>
@@ -108,17 +94,6 @@ const ProductCreatePage = () => {
                                     touched={touched.name}
                                     error={errors.name} />
 
-                                <InputGroup
-                                    field={"description"}
-                                    label={"Опис"}
-                                    type={"text"}
-                                    placeholder={"Вкажіть опис"}
-                                    value={values.description}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    touched={touched.description}
-                                    error={errors.description} />
-
                                 <SelectGroup
                                     label="Категорія"
                                     field="categoryId"
@@ -130,6 +105,27 @@ const ProductCreatePage = () => {
                                     optionKey="id"
                                     optionLabel="name"
                                 />
+
+                                <ImageListGroup
+                                    images={values.images}
+                                    setFieldValue={setFieldValue}
+                                    error={errors.images}
+                                    touched={touched.images}
+                                />
+
+                                <InputGroup
+                                    field={"description"}
+                                    label={"Опис"}
+                                    type={"text"}
+                                    placeholder={"Вкажіть опис"}
+                                    value={values.description}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    touched={touched.description}
+                                    error={errors.description} />
+
+
+
 
                                 <button
                                     type="submit"
