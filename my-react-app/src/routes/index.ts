@@ -9,8 +9,12 @@ const Settings = lazy(() => import('../pages/Settings'));
 const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
+
 const CategoryCreate = lazy(() => import('../components/admin/category/create'));
 const CategoryList = lazy(() => import('../components/admin/category/list'));
+
+
+const ProductCreate = lazy(() => import('../components/admin/product/create'));
 
 const coreRoutes = [
   {
@@ -44,6 +48,18 @@ const coreRoutes = [
     path: 'categories/create',
     title: 'Додати категорію',
     component: CategoryCreate,
+  },
+
+  {
+    path: 'products/list',
+    title: 'Продукти',
+    component: CategoryList,
+  },
+
+  {
+    path: 'products/create',
+    title: 'Додати продукт',
+    component: ProductCreate,
   },
 
   {

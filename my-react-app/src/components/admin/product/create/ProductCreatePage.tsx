@@ -1,5 +1,5 @@
 import Breadcrumb from '../../Breadcrumb.tsx';
-import {ICategoryCreate} from "./types.ts";
+import {IProductCreate} from "./types.ts";
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import {ChangeEvent, lazy} from "react";
@@ -11,10 +11,10 @@ import http_common from "../../../../http_common.ts";
 import {ITokenResponse} from "../../../../pages/Authentication/SignIn/types.ts";
 import {useNavigate} from "react-router-dom";
 
-const CategoryCreatePage = () => {
+const ProductCreatePage = () => {
     const navigate = useNavigate();
 
-    const init : ICategoryCreate = {
+    const init : IProductCreate = {
         name: "",
         image: null,
         description: ""
@@ -26,7 +26,7 @@ const CategoryCreatePage = () => {
         image: Yup.mixed().required("Фото є обов'язковим"),
     });
 
-    const onFormikSubmit = async (values: ICategoryCreate) => {
+    const onFormikSubmit = async (values: IProductCreate) => {
         try {
             await http_common.post<ITokenResponse>("/api/categories", values,
                 {
@@ -64,7 +64,7 @@ const CategoryCreatePage = () => {
 
     return (
         <>
-            <Breadcrumb pageName="Додати категорію" />
+            <Breadcrumb pageName="Додати товар" />
 
             <div className="mx-auto ">
                 <div className="">
@@ -102,7 +102,7 @@ const CategoryCreatePage = () => {
                                     touched={touched.image}
                                     error={errors.image}
                                     onChange={handleFileChange}
-                                    />
+                                />
 
                                 <button
                                     type="submit"
@@ -120,4 +120,4 @@ const CategoryCreatePage = () => {
     );
 };
 
-export default CategoryCreatePage;
+export default ProductCreatePage;
