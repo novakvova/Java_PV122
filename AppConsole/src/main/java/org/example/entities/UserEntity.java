@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,6 +31,9 @@ public class UserEntity {
     private String password;
     @Column(nullable = true)
     private boolean isGoogleAuth;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserRoleEntity> userRoles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BasketEntity> baskets;
